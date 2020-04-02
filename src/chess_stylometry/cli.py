@@ -38,22 +38,40 @@ def get_opts() -> argparse.Namespace:
         "--download", help="Boolean flag to download PGNS", type=bool, default=False
     )
     arg_parser.add_argument(
-        "--player-name", help="Account name of person you would like to download PGNS from", type=str, default=None
+        "--player-name",
+        help="Account name of person you would like to download PGNS from",
+        type=str,
+        default=None,
     )
     arg_parser.add_argument(
-        "--pgn_source", help="Lichess (L) or Chess.com (C). Default lichess", choices={'L', 'C'}, default='L'
+        "--pgn_source",
+        help="Lichess (L) or Chess.com (C). Default lichess",
+        choices={"L", "C"},
+        default="L",
     )
     arg_parser.add_argument(
-        "--start-month", help="Starting month of PGNs to download (1-12)", type=int, default=None
+        "--start-month",
+        help="Starting month of PGNs to download (1-12)",
+        type=int,
+        default=None,
     )
     arg_parser.add_argument(
-        "--end-month", help="Ending month of PGNs to download (1-12)", type=int, default=None
+        "--end-month",
+        help="Ending month of PGNs to download (1-12)",
+        type=int,
+        default=None,
     )
     arg_parser.add_argument(
-        "--start-year", help="Starting year of PGNs to download (2012-)", type=int, default=None
+        "--start-year",
+        help="Starting year of PGNs to download (2012-)",
+        type=int,
+        default=None,
     )
     arg_parser.add_argument(
-        "--end-year", help="Ending month of PGNs to download (2012-)", type=int, default=None
+        "--end-year",
+        help="Ending month of PGNs to download (2012-)",
+        type=int,
+        default=None,
     )
     opts, _unknown = arg_parser.parse_known_args()
     return opts
@@ -61,7 +79,15 @@ def get_opts() -> argparse.Namespace:
 
 def type_arguments(opts: argparse.Namespace) -> Arguments:
     if opts.download:
-        assert all([opts.player_name, opts.start_month, opts.end_month, opts.start_year, opts.end_year])
+        assert all(
+            [
+                opts.player_name,
+                opts.start_month,
+                opts.end_month,
+                opts.start_year,
+                opts.end_year,
+            ]
+        )
 
     return Arguments(
         path_to_pgns=opts.path_to_pgns,
@@ -72,8 +98,8 @@ def type_arguments(opts: argparse.Namespace) -> Arguments:
         start_month=opts.start_month,
         end_month=opts.end_month,
         start_year=opts.start_year,
-        end_year=opts.end_year
-        )
+        end_year=opts.end_year,
+    )
 
 
 def parse_arguments(args: Arguments):

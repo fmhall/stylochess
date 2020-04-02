@@ -1,6 +1,7 @@
 import requests
 import os
 
+
 def download():
     PLAYER = "IMRosen"
     STARTING_YEAR = 2015
