@@ -32,16 +32,16 @@ def get_opts() -> argparse.Namespace:
         type=str,
     )
     arg_parser.add_argument(
-        "--analyze", help="Boolean flag to analyze", type=bool
+        "--analyze", help="Boolean flag to analyze", type=bool, default=False
     )
     arg_parser.add_argument(
-        "--download", help="Boolean flag to download PGNS", type=bool
+        "--download", help="Boolean flag to download PGNS", type=bool, default=False
     )
     arg_parser.add_argument(
         "--player-name", help="Account name of person you would like to download PGNS from", type=str, default=None
     )
     arg_parser.add_argument(
-        "--pgn_source", help="Lichess (L) or Chess.com (C). Default lichess", type=str, default="L"
+        "--pgn_source", help="Lichess (L) or Chess.com (C). Default lichess", choices={'L', 'C'}, default='L'
     )
     arg_parser.add_argument(
         "--start-month", help="Starting month of PGNs to download (1-12)", type=int, default=None
@@ -83,5 +83,8 @@ def parse_arguments(args: Arguments):
         assert 1 <= args.end_month <= 12
         assert 2012 <= args.start_month <= cur_year
         assert 2012 <= args.start_month <= cur_year
-        assert args.pgn_source in ['L', 'C']
         assert args.player_name.isalnum()
+
+
+def print_arguments(args: Arguments):
+    print(args)
