@@ -1,6 +1,8 @@
 import requests
 import os
 from chess_stylometry.cli import Arguments
+import lichess.api
+from lichess.format import PGN, SINGLE_PGN, PYCHESS
 
 
 def make_folder(args: Arguments):
@@ -38,8 +40,13 @@ def download_chesscom(args: Arguments):
 
 
 def download_lichess(args: Arguments):
-    print("Lichess download")
-    pass
+    filename = os.path.join(args.path_to_pgns, "games.pgn")
+    print("Writing PGNs to", filename)
+    with open(filename, "w+") as f:
+        games = lichess.api.user_games(args.player_name, format=SINGLE_PGN)
+        f.write(games)
+
+    print("Finished.")
 
 
 def download(args: Arguments):

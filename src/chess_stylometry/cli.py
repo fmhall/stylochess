@@ -77,15 +77,11 @@ def get_opts() -> argparse.Namespace:
 
 def type_arguments(opts: argparse.Namespace) -> Arguments:
     if opts.download:
-        assert all(
-            [
-                opts.player_name,
-                opts.start_month,
-                opts.end_month,
-                opts.start_year,
-                opts.end_year,
-            ]
-        )
+        assert opts.player_name
+        if opts.pgn_source == "C":
+            assert all(
+                [opts.start_month, opts.end_month, opts.start_year, opts.end_year,]
+            )
 
     return Arguments(
         path_to_pgns=opts.path_to_pgns,
@@ -102,12 +98,14 @@ def type_arguments(opts: argparse.Namespace) -> Arguments:
 
 def parse_arguments(args: Arguments):
     if args.download:
-        cur_year = datetime.today().year
-        assert 1 <= args.start_month <= 12
-        assert 1 <= args.end_month <= 12
-        assert 2012 <= args.start_year <= cur_year
-        assert args.start_year <= args.end_year <= cur_year
         assert args.player_name.isalnum()
+        if args.pgn_source == "C":
+            cur_year = datetime.today().year
+            assert 1 <= args.start_month <= 12
+            assert 1 <= args.end_month <= 12
+            assert 2012 <= args.start_year <= cur_year
+            assert args.start_year <= args.end_year <= cur_year
+            assert args.player_name.isalnum()
 
 
 def print_arguments(args: Arguments):
