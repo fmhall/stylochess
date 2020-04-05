@@ -4,8 +4,6 @@ from dataclasses import dataclass
 from typing import Optional
 from datetime import datetime
 
-abs_path = os.path.dirname(os.path.abspath(__file__))
-
 
 @dataclass
 class Arguments:
@@ -29,7 +27,7 @@ def get_opts() -> argparse.Namespace:
     arg_parser.add_argument(
         "--path-to-pgns",
         help="Path to a folder of pgn files or a single pgn file",
-        type=str,
+        type=path_to_abs_path,
     )
     arg_parser.add_argument(
         "--analyze", help="Boolean flag to analyze", type=bool, default=False
@@ -114,3 +112,11 @@ def parse_arguments(args: Arguments):
 
 def print_arguments(args: Arguments):
     print(args)
+
+
+def path_to_abs_path(path_to_pgns: str):
+    abs_path = os.path.dirname(os.path.abspath(__file__))
+    if not os.path.isabs(path_to_pgns):
+        path_to_pgns = os.path.join(abs_path, path_to_pgns)
+        print("Created absolute path: ", path_to_pgns)
+    return path_to_pgns

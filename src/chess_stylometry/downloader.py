@@ -4,20 +4,13 @@ from chess_stylometry.cli import Arguments
 
 
 def make_folder(args: Arguments):
-    abs_path = os.path.dirname(os.path.abspath(__file__))
-    folder_path = args.path_to_pgns
-    if not os.path.isabs(folder_path):
-        print("creating absolute", abs_path, folder_path)
-        folder_path = os.path.join(abs_path, folder_path)
-    if not os.path.isdir(folder_path):
-        os.makedirs(folder_path)
-    print("Writing PGNs to", folder_path)
-    return folder_path
+    if not os.path.isdir(args.path_to_pgns):
+        os.makedirs(args.path_to_pgns)
 
 
-def download_chesscom(args: Arguments, abs_folder_path: str):
+def download_chesscom(args: Arguments):
     filename = os.path.join(
-        abs_folder_path,
+        args.path_to_pgns,
         "{}_{}_{}_{}_{}.pgn".format(
             args.player_name,
             args.start_year,
@@ -26,7 +19,7 @@ def download_chesscom(args: Arguments, abs_folder_path: str):
             args.end_month,
         ),
     )
-    print(filename)
+    print("Writing PGNs to", filename)
     with open(filename, "w+") as f:
         cur_year = args.start_year
         while cur_year <= args.end_year:
@@ -40,19 +33,19 @@ def download_chesscom(args: Arguments, abs_folder_path: str):
                 )
                 f.write(r.text)
             cur_year += 1
-        print("Wrote PGNs to", filename)
-        print("Wrote PGNs to", args.path_to_pgns)
+
         print("Finished.")
 
 
-def download_lichess(args: Arguments, abs_folder_path: str):
+def download_lichess(args: Arguments):
     print("Lichess download")
     pass
 
 
 def download(args: Arguments):
-    abs_path_to_folder = make_folder(args)
+    make_folder(args)
+
     if args.pgn_source == "C":
-        download_chesscom(args, abs_path_to_folder)
+        download_chesscom(args)
     else:
-        download_lichess(args, abs_path_to_folder)
+        download_lichess(args)
