@@ -44,7 +44,7 @@ def get_opts() -> argparse.Namespace:
         default=None,
     )
     arg_parser.add_argument(
-        "--pgn_source",
+        "--pgn-source",
         help="Lichess (L) or Chess.com (C). Default lichess",
         choices={"L", "C"},
         default="L",
@@ -53,13 +53,13 @@ def get_opts() -> argparse.Namespace:
         "--start-month",
         help="Starting month of PGNs to download (1-12)",
         type=int,
-        default=None,
+        default=1,
     )
     arg_parser.add_argument(
         "--end-month",
         help="Ending month of PGNs to download (1-12)",
         type=int,
-        default=None,
+        default=12,
     )
     arg_parser.add_argument(
         "--start-year",
@@ -107,8 +107,8 @@ def parse_arguments(args: Arguments):
         cur_year = datetime.today().year
         assert 1 <= args.start_month <= 12
         assert 1 <= args.end_month <= 12
-        assert 2012 <= args.start_month <= cur_year
-        assert 2012 <= args.start_month <= cur_year
+        assert 2012 <= args.start_year <= cur_year
+        assert args.start_year <= args.end_year <= cur_year
         assert args.player_name.isalnum()
 
 

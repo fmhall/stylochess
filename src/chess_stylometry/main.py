@@ -9,6 +9,7 @@ if __name__ == "__main__":
     cli.print_arguments(args)
     if args.download:
         # Download PGNS
+        downloader.download(args)
         pass
     if args.analyze:
         # Analyze
