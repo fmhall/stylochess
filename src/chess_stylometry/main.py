@@ -1,6 +1,6 @@
 from chess_stylometry import cli
 from chess_stylometry import downloader
-
+from chess_stylometry import analyzer
 
 if __name__ == "__main__":
     opts = cli.get_opts()
@@ -13,4 +13,5 @@ if __name__ == "__main__":
         pass
     if args.analyze:
         # Analyze
+        # analyzer.analyze(args)
         pass

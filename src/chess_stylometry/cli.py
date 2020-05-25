@@ -112,7 +112,7 @@ def print_arguments(args: Arguments):
     print(args)
 
 
-def path_to_abs_path(path_to_pgns: str):
+def path_to_abs_path(path_to_pgns):
     abs_path = os.path.dirname(os.path.abspath(__file__))
     if not os.path.isabs(path_to_pgns):
         path_to_pgns = os.path.join(abs_path, path_to_pgns)

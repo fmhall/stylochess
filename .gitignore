@@ -3,3 +3,6 @@ env
 __pycache__
 test
 src/chess_stylometry/.DS_Store
+.DS_Store
+src/.DS_Store
+src/chess_stylometry/__init__.pyc

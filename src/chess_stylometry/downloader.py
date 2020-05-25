@@ -2,7 +2,7 @@ import requests
 import os
 from chess_stylometry.cli import Arguments
 import lichess.api
-from lichess.format import PGN, SINGLE_PGN, PYCHESS
+from lichess.format import SINGLE_PGN
 
 
 def make_folder(args: Arguments):
@@ -27,10 +27,10 @@ def download_chesscom(args: Arguments):
         while cur_year <= args.end_year:
             end_month = args.end_month if cur_year == args.end_year else 12
             for month in range(args.start_month, end_month + 1):
-                print("Downloading from {}/{}".format(month, args.start_year))
+                print("Downloading from {}/{}".format(month, cur_year))
                 r = requests.get(
                     "https://api.chess.com/pub/player/{}/games/{}/{}/pgn".format(
-                        args.player_name, args.start_year, month
+                        args.player_name, cur_year, month
                     )
                 )
                 f.write(r.text)
