@@ -17,3 +17,13 @@ Secondary factor:
 1. User specifies a group of games in PGN format to analyze
 2. The program analyzes each game, and creates tables of openings 
 
+## Tools
+
+### Downloader
+Download PGNS from any player from any time period using the downloader.
+Usage:
+
+In `src/chess_stylometry`:
+```python
+python main.py --path-to-pgns "test/hikaru" --download True --player-name hikaru  --pgn-source C --start-year 2014 --end-year 2020
+```
