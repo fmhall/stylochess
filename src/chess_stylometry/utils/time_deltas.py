@@ -4,7 +4,7 @@ from datetime import timedelta
 from typing import NamedTuple, List
 
 player1 = "konevlad"
-player2 = "DrNykterstein"
+player2 = "Sibelephant"
 wdir = "../test"
 pgn_name = "games.pgn"
 
@@ -24,7 +24,12 @@ def get_UTC_dates_and_times(wdir, player, pgn_name):
         tstamp = utc_date.replace(".", "-") + "T" + utc_time
         dt = datetime.fromisoformat(tstamp)
         utc_timestamps.append(dt)
-    return sorted(utc_timestamps)
+    utc_timestamps.sort()
+    print("Timestamps info:")
+    print(utc_timestamps[0])
+    print(utc_timestamps[-1])
+    print(len(utc_timestamps))
+    return utc_timestamps
 
 
 class DeltaInfo(NamedTuple):
@@ -42,11 +47,7 @@ def compare_dt_lists(
     i1, i2 = next(a1), next(a2)
     min_dif = abs(i1 - i2)
     z_difs = []
-    print(i1 > i2)
-    print(min_dif)
     i1, i2 = next(a1), next(a2)
-    print(i1 > i2)
-    print(min_dif)
     min_info = None
     difs = []
     while True:
@@ -80,5 +81,10 @@ if __name__ == "__main__":
     for dif in difs[:10]:
         print(dif.delta)
         print(dif.player1)
-        print(dif.player2)
         print(dif.player1_dt)
+        print(dif.player2)
+        print(dif.player2_dt)
+        print("\n")
+        p1_idx = player1_dts.index(dif.player1_dt)
+        p2_idx = player2_dts.index(dif.player2_dt)
+

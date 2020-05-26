@@ -34,6 +34,7 @@ def download_chesscom(args: Arguments):
                     )
                 )
                 f.write(r.text)
+                f.write("\n\n")
             cur_year += 1
 
         print("Finished.")

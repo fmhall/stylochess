@@ -2,7 +2,7 @@
 import chess_graph
 
 player1 = "konevlad"
-player2 = "DrNykterstein"
+player2 = "Sibelephant"
 wdir = "../test"
 pgn_name = "games.pgn"
 
@@ -12,7 +12,7 @@ chess_graph.graph(
     filename,
     depth=5,
     shade=True,
-    fragmentation_percentage=.01,
+    fragmentation_percentage=.03,
     should_defragment=True,
     custom_branching=False,
     should_download=False,
