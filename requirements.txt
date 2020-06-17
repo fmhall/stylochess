@@ -1,4 +1,5 @@
 chess-graph==1.7.5
+matplotlib==3.2.2
 pgnparser==1.0
 plotly==4.7.1
 python-chess==0.31.1
