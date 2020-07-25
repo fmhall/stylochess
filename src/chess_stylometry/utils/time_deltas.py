@@ -5,8 +5,8 @@ from typing import NamedTuple, List
 import os
 
 
-player1 = "PLAYER_NAME"
-
+player1 = "watneg"
+FILTER_TITLED_ARENAS = False
 # Set this if you want to test against just one player
 player2 = ""
 wdir = "../test"
@@ -16,7 +16,7 @@ pgn_name = "games.pgn"
 players = [name for name in os.listdir(wdir) if os.path.isdir(os.path.join(wdir, name))]
 
 
-def get_UTC_dates_and_times(wdir, player, pgn_name):
+def get_UTC_dates_and_times(wdir, player, pgn_name, filtered=FILTER_TITLED_ARENAS):
     filename = "/".join([wdir, player, pgn_name])
     pgn = open(filename)
     utc_timestamps = []
@@ -28,6 +28,10 @@ def get_UTC_dates_and_times(wdir, player, pgn_name):
         utc_time = headers["UTCTime"]
         tstamp = utc_date.replace(".", "-") + "T" + utc_time
         dt = datetime.fromisoformat(tstamp)
+        event = headers["Event"]
+        if filtered:
+            if "Titled" in event:
+                continue
         utc_timestamps.append(dt)
     utc_timestamps.sort()
     return utc_timestamps
