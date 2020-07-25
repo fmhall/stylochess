@@ -12,7 +12,7 @@ chess_graph.graph(
     filename,
     depth=5,
     shade=True,
-    fragmentation_percentage=.03,
+    fragmentation_percentage=0.03,
     should_defragment=True,
     custom_branching=False,
     should_download=False,

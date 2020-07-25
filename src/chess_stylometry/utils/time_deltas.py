@@ -3,15 +3,16 @@ from datetime import datetime
 from datetime import timedelta
 from typing import NamedTuple, List
 
-player1 = "konevlad"
-player2 = "Sibelephant"
+player1 = "watneg"
+player2 = ""
 wdir = "../test"
 pgn_name = "games.pgn"
+
+players = ["DrNykterstein", "duhless", "GOGIEFF", "hikaru", "watneg", "lyinted"]
 
 
 def get_UTC_dates_and_times(wdir, player, pgn_name):
     filename = "/".join([wdir, player, pgn_name])
-    print(filename)
     pgn = open(filename)
     utc_timestamps = []
     while True:
@@ -25,10 +26,6 @@ def get_UTC_dates_and_times(wdir, player, pgn_name):
         dt = datetime.fromisoformat(tstamp)
         utc_timestamps.append(dt)
     utc_timestamps.sort()
-    print("Timestamps info:")
-    print(utc_timestamps[0])
-    print(utc_timestamps[-1])
-    print(len(utc_timestamps))
     return utc_timestamps
 
 
@@ -74,17 +71,31 @@ def compare_dt_lists(
 
 if __name__ == "__main__":
     player1_dts = get_UTC_dates_and_times(wdir, player1, pgn_name)
-    player2_dts = get_UTC_dates_and_times(wdir, player2, pgn_name)
-    min_info, difs = compare_dt_lists(player1_dts, player2_dts, player1, player2)
-    print(min_info)
-    difs.sort(key=lambda x: x.delta)
-    for dif in difs[:10]:
-        print(dif.delta)
-        print(dif.player1)
-        print(dif.player1_dt)
-        print(dif.player2)
-        print(dif.player2_dt)
-        print("\n")
-        p1_idx = player1_dts.index(dif.player1_dt)
-        p2_idx = player2_dts.index(dif.player2_dt)
-
+    if player2:
+        players = [player2]
+    for player2 in players:
+        if player2 == player1:
+            continue
+        player2_dts = get_UTC_dates_and_times(wdir, player2, pgn_name)
+        min_info, difs = compare_dt_lists(player1_dts, player2_dts, player1, player2)
+        # print(min_info)
+        difs.sort(key=lambda x: x.delta)
+        if difs[0].delta > timedelta(minutes=1):
+            print("Could be ", player2)
+            for dif in difs[:3]:
+                print(dif.delta)
+                print(dif.player1)
+                print(dif.player1_dt)
+                print(dif.player2)
+                print(dif.player2_dt)
+                print("\n")
+                # p1_idx = player1_dts.index(dif.player1_dt)
+                # p2_idx = player2_dts.index(dif.player2_dt)
+        else:
+            print("Can't be ", player2)
+            close_games = 0
+            for dif in difs[:100]:
+                if dif.delta <= timedelta(minutes=1):
+                    close_games += 1
+            print("Games within one minute: ", close_games)
+            print("\n")

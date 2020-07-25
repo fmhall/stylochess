@@ -13,16 +13,10 @@ def make_folder(args: Arguments):
 def download_chesscom(args: Arguments):
     filename = os.path.join(
         args.path_to_pgns,
-        "{}_{}_{}_{}_{}.pgn".format(
-            args.player_name,
-            args.start_year,
-            args.start_month,
-            args.end_year,
-            args.end_month,
-        ),
+        "games.pgn"
     )
     print("Writing PGNs to", filename)
-    with open(filename, "w+") as f:
+    with open(filename, "w") as f:
         cur_year = args.start_year
         while cur_year <= args.end_year:
             end_month = args.end_month if cur_year == args.end_year else 12
