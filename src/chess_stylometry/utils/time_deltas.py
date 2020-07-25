@@ -2,13 +2,18 @@ import chess.pgn
 from datetime import datetime
 from datetime import timedelta
 from typing import NamedTuple, List
+import os
 
-player1 = "watneg"
+
+player1 = "PLAYER_NAME"
+
+# Set this if you want to test against just one player
 player2 = ""
 wdir = "../test"
 pgn_name = "games.pgn"
 
-players = ["DrNykterstein", "duhless", "GOGIEFF", "hikaru", "watneg", "lyinted"]
+# Iterate through the folders in your wdir and use them for comparison
+players = [name for name in os.listdir(wdir) if os.path.isdir(os.path.join(wdir, name))]
 
 
 def get_UTC_dates_and_times(wdir, player, pgn_name):
@@ -16,7 +21,6 @@ def get_UTC_dates_and_times(wdir, player, pgn_name):
     pgn = open(filename)
     utc_timestamps = []
     while True:
-        offset = pgn.tell()
         headers = chess.pgn.read_headers(pgn)
         if not headers:
             break
@@ -81,7 +85,7 @@ if __name__ == "__main__":
         # print(min_info)
         difs.sort(key=lambda x: x.delta)
         if difs[0].delta > timedelta(minutes=1):
-            print("Could be ", player2)
+            print(player2)
             for dif in difs[:3]:
                 print(dif.delta)
                 print(dif.player1)
@@ -89,8 +93,6 @@ if __name__ == "__main__":
                 print(dif.player2)
                 print(dif.player2_dt)
                 print("\n")
-                # p1_idx = player1_dts.index(dif.player1_dt)
-                # p2_idx = player2_dts.index(dif.player2_dt)
         else:
             print("Can't be ", player2)
             close_games = 0
